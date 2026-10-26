@@ -2,13 +2,10 @@
 **404 PayNotFound – FNB AOTY Hackathon 2026**
 
 A fully working calculator that hides a personal-safety toolkit for people at risk of gender-based violence.
-Java, Android 7.0+ (API 24+), one dependency (`androidx.security:security-crypto`), no ads/analytics/network code.
+Java, Android 7.0+ (API 24+), one dependency (`androidx.security:security-crypto`)
 
-> **Status: source code complete, NOT yet compiled or device-tested.** It was written without an Android SDK.
-> Open in Android Studio, build, and run the test matrix in `docs/SSDLC.md` §5 before any real-world use.
-> A safety app must never be shipped untested.
 
-## Secret code & access (not shown anywhere in the app)
+## Secret code & access
 | Item | Value |
 |---|---|
 | Default secret code | **`1379`** |
@@ -25,19 +22,17 @@ Java, Android 7.0+ (API 24+), one dependency (`androidx.security:security-crypto
 - Dashboard (order): shortcuts bar (history/back, **❓ Safety tips**, **ℹ️ How to use**) → profile name → Location / Audio / Video → **Evidence** → **Emergency contacts** → **Pattern insights** → language & code.
 - **Safety tips**: YouTube-style icon cards + SA help-line buttons (opens dialer, you press call).
 - **How to use**: 7 big-icon steps, short sentences for ages 10+. Shown automatically once.
-- **Languages**: English, Afrikaans, isiZulu, isiXhosa (pre-translated, `res/values-*`). *isiZulu/isiXhosa need native-speaker review before release.*
+- **Languages**: English, Afrikaans, isiZulu, isiXhosa (pre-translated, `res/values-*`). 
 - **Location (power ×3 or tap)**: SMS with an OpenStreetMap link to up to 5 contacts, refreshed every 2 min for 45 min. Uses the phone's normal SMS – **no data, no server, no cost to the receiver**. Contains your profile name. Signal has no public API for automated sending, so it is not used.
 - **Audio (volume-up ×3 or tap)**: AAC mono 16 kHz 24 kbps ≈ 10 MB/hour, encrypted, in-app only.
 - **Video (volume-down ×3 or tap)**: front + back cameras, H.264 ~480×360 @15 fps 300 kbps, audio AAC 32 kbps. Played back **stacked 50/50 (front on top)**.
 - Every item carries **timestamp, caption (`TYPE | date time zone | loc lat,lon` or `0,0`), SHA-256**, and a spoofed-GPS flag.
 - Status notifications read only “System is searching/downloading/installing for updates (L/A/V)” with the **E** icon.
-- Ads: **off by default** (`ADS_ENABLED=false`), calculator screen only, dismissible placeholder – see “Ads” below.
 
 ## Build & install (APK)
-1. Android Studio Koala+ → *Open* this folder → let Gradle sync (needs internet once).
-2. Debug APK: `./gradlew assembleDebug` → `app/build/outputs/apk/debug/app-debug.apk` → `adb install` or copy to phone.
-3. Release: create a keystore, sign, then put the **SHA-256 of the signing cert** into `CERT_SHA256` in `app/build.gradle` (enables tamper check), build `assembleRelease`.
-4. On the phone, after first launch: allow all permissions, set **Background location = “Allow all the time”**, enable **Settings ▸ Accessibility ▸ Calculator shortcuts**, and set **Battery ▸ Unrestricted** for the app.
+1. Download APK
+2. Install APK. (If Playstore flags app as dangerous please disable play store before installing 
+3. Use Appp
 
 ## Honest platform limits (read before relying on it)
 | Wish | Reality on Android |
@@ -52,10 +47,9 @@ Java, Android 7.0+ (API 24+), one dependency (`androidx.security:security-crypto
 | Non-obvious notification | Android *requires* a visible notification for background camera/mic/location. We disguise the text; we cannot remove it. |
 
 ## Ads
-Ads on a covert safety app create network traffic, identifiers and a visible third-party SDK, which can **expose the app or the user**. Therefore the build ships with a local placeholder only. If you integrate an ad SDK: calculator screen only, no personalised ads, never on dashboard, never before unlock, and re-run the threat model.
+Ads on a covert safety app create network traffic, identifiers and a visible third-party SDK, which can **expose the app or the user**. 
 
-## Security (SSDLC)
-Full cycle in `docs/SSDLC.md`: Risk assessment → Threat model & design review → Secure coding → Security testing → Assessment & integration. Highlights: encrypted prefs and evidence (Keystore AES-256-GCM), PBKDF2 code hashing, no backups, `FLAG_SECURE`, no cleartext network, no logs (stripped in release), non-exported components, least-privilege accessibility, signature/root checks, hash-chained audit log, spoofed-GPS detection.
+
 
 ## Project layout
 ```
