@@ -32,7 +32,7 @@ Java, Android 7.0+ (API 24+), one dependency (`androidx.security:security-crypto
 ## Build & install (APK)
 1. Download APK
 2. Install APK. (If Playstore flags app as dangerous please disable play store before installing 
-3. Use Appp
+3. Use App
 
 ## Honest platform limits (read before relying on it)
 | Wish | Reality on Android |
